@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events & Announcements | Muhyisunnah Dars Ukkada</title>
+    <link rel="stylesheet" href="./main.css">
+    <link rel="icon" type="image/png" href="./favicon.png">
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">Muhyisunnah Dars Ukkada</a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link" data-i18n="nav_home">Home</a>
+                <a href="directory.html" class="nav-link" data-i18n="nav_directory">Directory</a>
+                <a href="events.html" class="nav-link" style="color:var(--primary);font-weight:bold;" data-i18n="nav_events">Events</a>
+                <a href="contact.html" class="nav-link" data-i18n="nav_contact">Contact</a>
+                <span data-guest style="display:flex; gap:0.5rem;">
+                    <a href="login.html" class="btn btn-secondary" style="padding:0.55rem 1.2rem;" data-i18n="btn_login">Login</a>
+                    <a href="register.html" class="btn btn-primary" style="padding:0.55rem 1.2rem;" data-i18n="btn_register">Register</a>
+                </span>
+                <span data-auth style="display:none; gap:0.5rem; align-items:center;">
+                    <a href="admin.html" data-role="admin" class="btn btn-secondary" style="padding:0.55rem 1.2rem; display:none;">Admin</a>
+                    <button id="logout-btn" class="btn btn-primary" style="padding:0.55rem 1.2rem;">Logout</button>
+                </span>
+            </div>
+        </div>
+    </nav>
+
+    <main style="min-height:100vh; background:var(--bg-secondary); padding-top:72px;">
+        <div class="container section-padding">
+            <div class="section-header animate-up">
+                <div class="bismillah" style="margin-bottom:1rem; font-size:1rem;">وَفِي ذَلِكَ فَلْيَتَنَافَسِ الْمُتَنَافِسُونَ</div>
+                <h1>Events &amp; Announcements</h1>
+                <p>Stay connected through exclusive alumni gatherings, Islamic programs, and professional events.</p>
+                <div class="gold-divider" style="max-width:300px; margin:1rem auto 0;"></div>
+            </div>
+
+            <!-- Category Filters -->
+            <div style="display:flex; gap:0.75rem; justify-content:center; flex-wrap:wrap; margin-bottom:3rem;" class="animate-up delay-1">
+                <button class="btn btn-primary filter-btn active" data-filter="all">All Events</button>
+                <button class="btn btn-secondary filter-btn" data-filter="Social">Social</button>
+                <button class="btn btn-secondary filter-btn" data-filter="Professional">Professional</button>
+                <button class="btn btn-secondary filter-btn" data-filter="Networking">Networking</button>
+            </div>
+
+            <div id="events-grid" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:1.75rem;"></div>
+
+            <div id="no-events" style="display:none; text-align:center; padding:5rem;">
+                <div style="font-size:4rem; margin-bottom:1rem;">📅</div>
+                <p style="color:var(--text-muted);">No events in this category.</p>
+            </div>
+        </div>
+    </main>
+
+        <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
+    <script src="./i18n.js"></script>
+    <script src="./app.js"></script>
+    <script>
+    const EMOJIS = { Social: '🎉', Professional: '💼', Networking: '🤝', Other: '📋' };
+    const GRADIENTS = {
+        Social: 'linear-gradient(135deg,#f43f5e,#fb923c)',
+        Professional: 'linear-gradient(135deg,#6366f1,#818cf8)',
+        Networking: 'linear-gradient(135deg,#10b981,#34d399)',
+        Other: 'linear-gradient(135deg,#8b5cf6,#a78bfa)'
+    };
+    let allEvents = [];
+
+    function renderEvents(events) {
+        const grid = document.getElementById('events-grid');
+        const noEvents = document.getElementById('no-events');
+        grid.innerHTML = '';
+        if (!events.length) { noEvents.style.display = 'block'; return; }
+        noEvents.style.display = 'none';
+
+        events.forEach((ev, i) => {
+            const card = document.createElement('div');
+            card.className = 'event-card animate-up';
+            card.style.animationDelay = `${i * 0.08}s`;
+            const d = new Date(ev.date);
+            const dateStr = d.toLocaleDateString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+            card.innerHTML = `
+                <div class="event-header" style="background:${GRADIENTS[ev.category] || GRADIENTS.Other};">
+                    <div class="event-icon">${EMOJIS[ev.category] || '📋'}</div>
+                    <div>
+                        <span class="badge" style="background:rgba(255,255,255,0.2); color:#fff; margin-bottom:0.5rem;">${ev.category}</span>
+                        <h3 style="color:#fff; font-size:1.2rem;">${ev.title}</h3>
+                    </div>
+                </div>
+                <div class="event-body">
+                    <div style="display:flex; flex-direction:column; gap:0.6rem; margin-bottom:1.5rem; color:var(--text-secondary); font-size:0.9rem;">
+                        <div class="d-flex gap-2 align-center"><span>📅</span><span>${dateStr}</span></div>
+                        <div class="d-flex gap-2 align-center"><span>📍</span><span>${ev.location}</span></div>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-primary" style="flex:1; padding:0.6rem;">RSVP Now</button>
+                        <button class="btn btn-secondary" style="padding:0.6rem 1rem;">Share</button>
+                    </div>
+                </div>`;
+            grid.appendChild(card);
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const updateEventsData = () => {
+            allEvents = JSON.parse(localStorage.getItem(App.STORAGE_KEYS.EVENTS)) || [];
+            const activeBtn = document.querySelector('.filter-btn.active');
+            const filter = activeBtn ? activeBtn.dataset.filter : 'all';
+            renderEvents(filter === 'all' ? allEvents : allEvents.filter(e => e.category === filter));
+        };
+
+        updateEventsData();
+        window.addEventListener('dbSynced', updateEventsData);
+
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => { b.className = 'btn btn-secondary filter-btn'; });
+                btn.className = 'btn btn-primary filter-btn';
+                updateEventsData();
+            });
+        });
+    });
+    </script>
+</body>
+</html>

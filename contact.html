@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | MUHYISSUNNA DARS UKKUDA</title>
+    <link rel="stylesheet" href="./main.css">
+    <link rel="icon" type="image/png" href="./favicon.png">
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">Alumni Connect</a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="directory.html" class="nav-link">Directory</a>
+                <a href="events.html" class="nav-link">Events</a>
+                <a href="contact.html" class="nav-link" style="color:var(--primary);">Contact</a>
+                <span data-guest style="display:flex; gap:0.5rem;">
+                    <a href="login.html" class="btn btn-secondary" style="padding:0.55rem 1.2rem;">Login</a>
+                    <a href="register.html" class="btn btn-primary" style="padding:0.55rem 1.2rem;">Register</a>
+                </span>
+                <span data-auth style="display:none; gap:0.5rem; align-items:center;">
+                    <a href="dashboard.html" class="btn btn-secondary" style="padding:0.55rem 1.2rem;">Dashboard</a>
+                    <a href="admin.html" data-role="admin" class="btn btn-secondary" style="padding:0.55rem 1.2rem; display:none;">Admin</a>
+                    <button id="logout-btn" class="btn btn-primary" style="padding:0.55rem 1.2rem;">Logout</button>
+                </span>
+            </div>
+        </div>
+    </nav>
+
+    <main style="min-height:100vh; background:var(--bg-secondary); padding-top:72px;">
+        <div class="container section-padding">
+            <div class="section-header animate-up" style="margin-bottom:4rem;">
+                <div class="bismillah" style="margin-bottom:1rem; font-size:1rem;">سُبْحَانَكَ لا عِلْمَ لَنَا إِلاَّ مَا عَلَّمْتَنَا</div>
+                <h1>Get in Touch</h1>
+                <p>Our team at MUHYISSUNNA DARS UKKUDA is here to assist you with any inquiries about the alumni network.</p>
+                <div class="gold-divider" style="max-width:300px; margin:1rem auto 0;"></div>
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:start;">
+                <div class="animate-left">
+                    <h2 style="font-size:1.5rem; margin-bottom:2rem;">Contact Information</h2>
+                    <div style="display:flex; flex-direction:column; gap:1.5rem; margin-bottom:3rem;">
+                        <div class="d-flex gap-3 align-center contact-item">
+                            <div class="contact-icon-box">📍</div>
+                            <div>
+                        <div style="font-weight:600; margin-bottom:0.25rem;">Our Location</div>
+                        <div style="color:var(--text-secondary); font-size:0.9rem;">MUHYISSUNNA DARS UKKUDA, Ukkada, India</div>
+                    </div>        </div>
+                        </div>
+                        <div class="d-flex gap-3 align-center contact-item">
+                            <div class="contact-icon-box">📧</div>
+                            <div>
+                        <div style="font-weight:600; margin-bottom:0.25rem;">Email Support</div>
+                        <a href="mailto:alumni@dars-ukkada.edu" style="color:var(--primary); font-size:0.9rem;">alumni@dars-ukkada.edu</a>
+                    </div>        </div>
+                        </div>
+                        <div class="d-flex gap-3 align-center contact-item">
+                            <div class="contact-icon-box">📞</div>
+                            <div>
+                                <div style="font-weight:600; margin-bottom:0.25rem;">Phone</div>
+                                <div style="color:var(--text-secondary); font-size:0.9rem;">+1 (555) 123-4567</div>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-3 align-center contact-item">
+                            <div class="contact-icon-box">⏰</div>
+                            <div>
+                                <div style="font-weight:600; margin-bottom:0.25rem;">Office Hours</div>
+                                <div style="color:var(--text-secondary); font-size:0.9rem;">Monday – Friday, 9 AM – 5 PM EST</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="height:240px; background:linear-gradient(135deg,rgba(99,102,241,0.1),rgba(244,63,94,0.06)); border-radius:var(--radius-lg); border:1px solid var(--border-color); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1rem; color:var(--text-muted);">
+                        <span style="font-size:3rem;">🗺️</span>
+                        <span style="font-size:0.9rem;">Location Map</span>
+                    </div>
+                </div>
+
+                <div class="form-card animate-up delay-2">
+                    <form id="contact-form" novalidate>
+                        <h2 style="font-size:1.5rem; margin-bottom:1.75rem;">Send a Message</h2>
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label class="form-label">First Name</label>
+                                <input type="text" id="c-fname" class="form-input" placeholder="Jane" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Last Name</label>
+                                <input type="text" id="c-lname" class="form-input" placeholder="Smith" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" id="c-email" class="form-input" placeholder="jane@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Subject</label>
+                            <select id="c-subject" class="form-input">
+                                <option>General Inquiry</option>
+                                <option>Registration Help</option>
+                                <option>Event Information</option>
+                                <option>Technical Support</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Message</label>
+                            <textarea id="c-message" class="form-input" rows="5" placeholder="Tell us how we can help you..." required></textarea>
+                        </div>
+                        <button type="submit" id="submit-btn" class="btn btn-primary btn-block btn-lg mt-3">Send Message</button>
+                    </form>
+
+                    <div id="contact-success" style="display:none; text-align:center; padding:2rem 0;">
+                        <div class="success-icon animate-scale">✓</div>
+                        <h3 style="margin-bottom:0.5rem;">Message Sent!</h3>
+                        <p style="color:var(--text-secondary);">We'll get back to you within 24 hours.</p>
+                        <button onclick="location.reload()" class="btn btn-secondary mt-3">Send Another</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-copy">
+            <span>&copy; 2026 MUHYISSUNNA DARS UKKUDA Alumni Network</span>
+            <a href="index.html" class="nav-logo">MUHYISSUNNA DARS UKKUDA</a>
+        </div>
+    </footer>
+
+        <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
+    <script src="./app.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBXBCvarFZcS-1kJe-zsL9HA7XnRAskgoQ",
+            authDomain: "mdu-alumni.firebaseapp.com",
+            projectId: "mdu-alumni",
+            storageBucket: "mdu-alumni.firebasestorage.app",
+            messagingSenderId: "1008766776695",
+            appId: "1:1008766776695:web:9c88f9784f863e0e095d72",
+            measurementId: "G-KF7SFBBFXY"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const form = document.getElementById('contact-form');
+        const submitBtn = document.getElementById('submit-btn');
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const originalBtnText = submitBtn.textContent;
+            submitBtn.textContent = "Sending...";
+            submitBtn.disabled = true;
+
+            const firstName = document.getElementById('c-fname').value;
+            const lastName = document.getElementById('c-lname').value;
+            const email = document.getElementById('c-email').value;
+            const subject = document.getElementById('c-subject').value;
+            const message = document.getElementById('c-message').value;
+
+            try {
+                await addDoc(collection(db, "messages"), {
+                    firstName,
+                    lastName,
+                    email,
+                    subject,
+                    message,
+                    createdAt: serverTimestamp()
+                });
+                form.style.display = 'none';
+                document.getElementById('contact-success').style.display = 'block';
+            } catch (error) {
+                console.error("Error adding document: ", error);
+                alert("Sorry, there was an error sending your message. Please try again.");
+                submitBtn.textContent = originalBtnText;
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

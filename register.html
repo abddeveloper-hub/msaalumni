@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | MUHYISSUNNA DARS UKKUDA Alumni</title>
+    <meta name="description" content="Create your alumni account for MUHYISSUNNA DARS UKKUDA.">
+    <link rel="stylesheet" href="./main.css">
+    <link rel="icon" type="image/png" href="./favicon.png">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">MUHYISSUNNA DARS UKKUDA</a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link" data-i18n="nav_home">Home</a>
+                <a href="login.html" class="btn btn-secondary" style="padding:0.55rem 1.2rem;" data-i18n="nav_login">Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <main style="min-height:100vh; background:var(--bg-secondary); padding-top:72px; display:flex; align-items:center;">
+        <div class="container section-padding" style="max-width:480px;">
+
+            <div class="form-card animate-up">
+                <div class="text-center mb-4">
+                    <div class="bismillah" style="margin-bottom:0.75rem;">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</div>
+                    <div style="font-size:3rem; margin-bottom:0.75rem;">🕌</div>
+                    <h1 style="font-size:2rem; margin-bottom:0.4rem; font-family:var(--font-serif);">Create Account</h1>
+                    <p style="color:var(--text-secondary); font-size:0.9rem;">MUHYISSUNNA DARS UKKUDA Alumni Network</p>
+                    <div class="gold-divider" style="max-width:180px; margin:1rem auto 0;"></div>
+                </div>
+
+                <div style="display:flex; align-items:center; margin-bottom:2rem;">
+                    <div style="flex:1; text-align:center;">
+                        <div
+                            style="width:32px; height:32px; border-radius:50%; background:linear-gradient(135deg,var(--primary),var(--gold)); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.85rem; margin:0 auto 0.4rem;">
+                            1</div>
+                        <div style="font-size:0.75rem; font-weight:600; color:var(--primary);">Account</div>
+                    </div>
+                    <div style="flex:1; height:2px; background:var(--border-color); margin-top:-1rem;"></div>
+                    <div style="flex:1; text-align:center;">
+                        <div
+                            style="width:32px; height:32px; border-radius:50%; background:var(--border-color); color:var(--text-muted); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.85rem; margin:0 auto 0.4rem;">
+                            2</div>
+                        <div style="font-size:0.75rem; color:var(--text-muted);">Profile</div>
+                    </div>
+                </div>
+
+                <form id="register-form" novalidate>
+                    <div class="form-group">
+                        <label class="form-label">Full Name *</label>
+                        <input type="text" id="reg-name" class="form-input" placeholder="e.g. Abdul Rahman" required
+                            autocomplete="name">
+                        <span class="form-error">Please enter your full name.</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Phone Number *</label>
+                        <input type="tel" id="reg-phone" class="form-input" placeholder="+91 98765 43210" required
+                            autocomplete="tel">
+                        <span class="form-error">Please enter a valid phone number.</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Email Address *</label>
+                        <input type="email" id="reg-email" class="form-input" placeholder="your@email.com" required
+                            autocomplete="email">
+                        <span class="form-error">Please enter a valid email address.</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Password *</label>
+                        <div style="position:relative;">
+                            <input type="password" id="reg-password" class="form-input"
+                                placeholder="Minimum 8 characters" required autocomplete="new-password"
+                                style="padding-right:3rem;">
+                            <button type="button" id="toggle-pw"
+                                style="position:absolute; right:1rem; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; color:var(--text-muted); font-size:1.1rem;">👁</button>
+                        </div>
+                        <span class="form-error">Password must be at least 8 characters.</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Confirm Password *</label>
+                        <input type="password" id="reg-confirm" class="form-input" placeholder="Re-enter your password"
+                            required autocomplete="new-password">
+                        <span class="form-error">Passwords do not match.</span>
+                    </div>
+
+                    <div id="error-banner"
+                        style="display:none; background:rgba(244,63,94,0.08); border:1px solid rgba(244,63,94,0.25); color:#c0392b; border-radius:var(--radius-md); padding:0.75rem 1rem; font-size:0.88rem; margin-bottom:1rem; text-align:center;">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block btn-lg" style="margin-top:0.5rem;">Continue
+                        to Profile →</button>
+                </form>
+
+                <div
+                    style="margin-top:1.75rem; text-align:center; padding-top:1.5rem; border-top:1px solid var(--border-color); font-size:0.88rem; color:var(--text-secondary);">
+                    Already have an account? <a href="login.html" style="color:var(--primary); font-weight:600;">Sign
+                        In</a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
+    <script src="./i18n.js"></script>
+    <script src="./app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Redirect if already logged in
+            if (App.getSession()) window.location.href = 'dashboard.html';
+
+            // Toggle password visibility
+            document.getElementById('toggle-pw').addEventListener('click', () => {
+                const pw = document.getElementById('reg-password');
+                pw.type = pw.type === 'password' ? 'text' : 'password';
+            });
+
+            function validateField(id, condition) {
+                const el = document.getElementById(id);
+                const group = el.closest('.form-group');
+                const valid = condition(el.value);
+                group.classList.toggle('has-error', !valid);
+                return valid;
+            }
+
+            document.getElementById('register-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const banner = document.getElementById('error-banner');
+                banner.style.display = 'none';
+
+                let ok = true;
+                ok &= validateField('reg-name', v => v.trim().length > 1);
+                ok &= validateField('reg-phone', v => v.trim().length >= 7);
+                ok &= validateField('reg-email', v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
+                ok &= validateField('reg-password', v => v.length >= 8);
+
+                const pw = document.getElementById('reg-password').value;
+                const confirm = document.getElementById('reg-confirm').value;
+                const confirmGroup = document.getElementById('reg-confirm').closest('.form-group');
+                if (pw !== confirm) {
+                    confirmGroup.classList.add('has-error');
+                    ok = false;
+                } else {
+                    confirmGroup.classList.remove('has-error');
+                }
+
+                if (!ok) return;
+
+                // Check if email already exists
+                const alumni = App.getAlumni();
+                const pending = App.getPendingRegistrations();
+                const emailExists = [...alumni, ...pending].some(a => a.email === document.getElementById('reg-email').value.trim());
+                if (emailExists) {
+                    banner.textContent = 'An account with this email already exists. Please sign in.';
+                    banner.style.display = 'block';
+                    return;
+                }
+
+                // Save step-1 data to sessionStorage and proceed to step 2
+                const step1 = {
+                    name: document.getElementById('reg-name').value.trim(),
+                    phone: document.getElementById('reg-phone').value.trim(),
+                    email: document.getElementById('reg-email').value.trim(),
+                    password: document.getElementById('reg-password').value
+                };
+                sessionStorage.setItem('reg_step1', JSON.stringify(step1));
+                window.location.href = 'profile.html';
+            });
+
+            // Live blur validation
+            ['reg-name', 'reg-phone', 'reg-email', 'reg-password'].forEach(id => {
+                document.getElementById(id).addEventListener('blur', () => {
+                    const el = document.getElementById(id);
+                    const group = el.closest('.form-group');
+                    group.classList.toggle('has-error', !el.value.trim());
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

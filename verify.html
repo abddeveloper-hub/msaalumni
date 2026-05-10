@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Alumni | MUHYISSUNNA DARS UKKUDA</title>
+    <link rel="stylesheet" href="./main.css">
+    <style>
+        .verify-wrap { padding-top:120px; min-height:100vh; background:var(--bg-secondary); padding-bottom:4rem; }
+        .verify-card { max-width:550px; margin:0 auto; background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-xl); padding:2.5rem; text-align:center; box-shadow:var(--shadow-lg); }
+        .v-icon { font-size:3rem; margin-bottom:1rem; }
+        .v-input { width:100%; padding:0.8rem 1rem; border:2px solid var(--border-color); border-radius:var(--radius-md); font-family:monospace; font-size:1.1rem; text-align:center; margin-bottom:1rem; background:var(--bg-main); color:var(--text-main); font-weight:bold; letter-spacing:0.05em; transition:var(--transition-fast); }
+        .v-input:focus { outline:none; border-color:var(--primary); box-shadow:0 0 0 3px rgba(212,175,55,0.15); }
+        
+        .result-box { margin-top:2rem; padding:1.5rem; border-radius:var(--radius-lg); display:none; text-align:left; animation:fadeIn 0.3s ease; }
+        .result-box.success { background:rgba(16,185,129,0.05); border:1px solid rgba(16,185,129,0.3); }
+        .result-box.error { background:rgba(239,68,68,0.05); border:1px solid rgba(239,68,68,0.3); text-align:center; }
+        
+        .r-header { display:flex; align-items:center; gap:1rem; margin-bottom:1rem; border-bottom:1px solid rgba(16,185,129,0.2); padding-bottom:1rem; }
+        .r-icon { width:50px; height:50px; background:#10b981; color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.5rem; }
+        .r-title { font-weight:800; font-size:1.2rem; color:#10b981; }
+        .r-subtitle { font-size:0.8rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.05em; }
+        
+        .r-row { display:flex; margin-bottom:0.5rem; font-size:0.9rem; }
+        .r-lbl { width:120px; color:var(--text-muted); font-weight:600; }
+        .r-val { font-weight:700; color:var(--text-main); }
+    </style>
+    <link rel="icon" type="image/png" href="./favicon.png">
+</head>
+<body>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">MUHYISSUNNA DARS UKKUDA</a>
+            <div class="nav-links">
+                <a href="directory.html" class="nav-link" data-i18n="nav_directory">Directory</a>
+                <a href="events.html" class="nav-link" data-i18n="nav_events">Events</a>
+                <a href="verify.html" class="nav-link" style="color:var(--primary);font-weight:bold;" data-i18n="nav_verify">Verify</a>
+                <span data-guest>
+                    <a href="login.html" class="btn btn-secondary" style="padding:0.55rem 1.2rem;" data-i18n="nav_login">Login</a>
+                </span>
+                <span data-auth style="display:none; gap:0.5rem; align-items:center;">
+                    <a href="dashboard.html" class="btn btn-secondary" style="padding:0.55rem 1.2rem;">Dashboard</a>
+                    <button onclick="App.toggleTheme()" style="background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--text-main);margin-left:0.5rem;">🌙</button>
+                </span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="verify-wrap">
+        <div class="container">
+            <div class="verify-card animate-up">
+                <div class="v-icon">📜</div>
+                <h1 style="font-family:var(--font-serif);font-size:1.8rem;color:var(--primary);margin-bottom:0.5rem;">Certificate Verification</h1>
+                <p style="color:var(--text-secondary);font-size:0.95rem;margin-bottom:2rem;line-height:1.6;">Enter a Member ID below to verify the authenticity of an alumnus from MUHYISSUNNA DARS UKKUDA.</p>
+                
+                <form id="verify-form">
+                    <input type="text" id="v-id" class="v-input" placeholder="e.g. MDU-001" required autocomplete="off">
+                    <button type="submit" class="btn btn-primary btn-block" style="padding:0.8rem;font-size:1.05rem;" id="v-btn">Verify Alumni ID</button>
+                </form>
+
+                <div id="v-success" class="result-box success">
+                    <div class="r-header">
+                        <div class="r-icon">✓</div>
+                        <div>
+                            <div class="r-title">VERIFIED ALUMNUS</div>
+                            <div class="r-subtitle">Official Record Found</div>
+                        </div>
+                    </div>
+                    <div class="r-row"><div class="r-lbl">Member ID</div><div class="r-val" id="r-id">—</div></div>
+                    <div class="r-row"><div class="r-lbl">Full Name</div><div class="r-val" id="r-name">—</div></div>
+                    <div class="r-row"><div class="r-lbl">Batch</div><div class="r-val" id="r-batch">—</div></div>
+                    <div class="r-row"><div class="r-lbl">Passed Year</div><div class="r-val" id="r-year">—</div></div>
+                    <div class="r-row"><div class="r-lbl">Dars Qual.</div><div class="r-val" id="r-qual">—</div></div>
+                    <div style="margin-top:1rem;padding-top:1rem;border-top:1px dashed rgba(16,185,129,0.3);font-size:0.75rem;color:var(--text-muted);text-align:center;">
+                        This digital record is securely verified against the official MUHYISSUNNA DARS UKKUDA database.
+                    </div>
+                </div>
+
+                <div id="v-error" class="result-box error">
+                    <div style="font-size:2rem;margin-bottom:0.5rem;">❌</div>
+                    <h3 style="color:#ef4444;margin-bottom:0.5rem;">Record Not Found</h3>
+                    <p style="font-size:0.85rem;color:var(--text-secondary);">We could not find an approved alumnus matching this ID. Please check the ID and try again.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
+    <script src="./i18n.js"></script>
+    <script src="./app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('verify-form');
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const btn = document.getElementById('v-btn');
+                const idInput = document.getElementById('v-id').value.trim().toUpperCase();
+                
+                if (!idInput) return;
+                
+                btn.textContent = 'Verifying...';
+                btn.disabled = true;
+                
+                document.getElementById('v-success').style.display = 'none';
+                document.getElementById('v-error').style.display = 'none';
+
+                // Simulate network request for effect
+                setTimeout(() => {
+                    const alumni = App.getAlumni();
+                    const record = alumni.find(a => (a.memberId || '').toUpperCase() === idInput);
+                    
+                    if (record) {
+                        document.getElementById('r-id').textContent = record.memberId;
+                        document.getElementById('r-name').textContent = record.name;
+                        document.getElementById('r-batch').textContent = record.batch || 'N/A';
+                        document.getElementById('r-year').textContent = record.passedYear || 'N/A';
+                        document.getElementById('r-qual').textContent = record.darsQual || 'N/A';
+                        document.getElementById('v-success').style.display = 'block';
+                    } else {
+                        document.getElementById('v-error').style.display = 'block';
+                    }
+                    
+                    btn.textContent = 'Verify Alumni ID';
+                    btn.disabled = false;
+                }, 800);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MUHYISSUNNA DARS UKKUDA | Alumni Network</title>
+    <meta name="description"
+        content="The official alumni network of MUHYISSUNNA DARS UKKUDA. Stay connected, grow, and give back.">
+    <meta name="theme-color" content="#b8860b">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="MDU Alumni">
+    <link rel="stylesheet" href="./main.css?v=1.1">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="./favicon.png">
+    <link rel="apple-touch-icon" href="./favicon.png">
+</head>
+
+<body>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">MUHYISSUNNA DARS UKKUDA</a>
+            <div class="nav-links">
+                <a href="directory.html" class="nav-link" data-i18n="nav_directory">Directory</a>
+                <a href="events.html" class="nav-link" data-i18n="nav_events">Events</a>
+                <a href="verify.html" class="nav-link" data-i18n="nav_verify">Verify</a>
+                <div style="position:relative; display:inline-block; margin-left:0.5rem;" class="lang-dropdown">
+                    <select onchange="setLanguage(this.value)" style="background:transparent; border:1px solid var(--border-color); color:var(--text-main); font-family:inherit; padding:0.2rem 0.5rem; border-radius:var(--radius-md); font-size:0.85rem; cursor:pointer;">
+                        <option value="en">English</option>
+                        <option value="ml">മലയാളം (Malayalam)</option>
+                        <option value="ar">العربية (Arabic)</option>
+                        <option value="kn">ಕನ್ನಡ (Kannada)</option>
+                    </select>
+                </div>
+                <span data-guest>
+                    <a href="login.html" class="btn btn-secondary" style="padding:0.55rem 1.2rem;">Login</a>
+                    <a href="register.html" class="btn btn-primary"
+                        style="padding:0.55rem 1.2rem; margin-left:0.5rem;">Register</a>
+                </span>
+                <span data-auth style="display:none; gap:0.5rem; align-items:center;">
+                    <a href="dashboard.html" class="btn btn-secondary" style="padding:0.55rem 1.2rem;">Dashboard</a>
+                    <a href="admin.html" data-role="admin" class="btn btn-secondary"
+                        style="padding:0.55rem 1.2rem; display:none;">Admin</a>
+                    <button id="logout-btn" class="btn btn-primary" style="padding:0.55rem 1.2rem;">Logout</button>
+                </span>
+                <button onclick="App.toggleTheme()" style="background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--text-main);margin-left:0.5rem;" title="Toggle Dark Mode">🌙</button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="islamic-pattern"></div>
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <div class="bismillah animate-up">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</div>
+                    <div class="hero-tag animate-up delay-1">Official Alumni Network</div>
+                    <h1 class="hero-title animate-up delay-2" data-i18n="hero_title">MUHYISSUNNA DARS UKKUDA</h1>
+                    <p class="hero-description animate-up delay-2" data-i18n="hero_subtitle">Reconnect with your brothers and sisters in knowledge.
+                        Join a network of graduates dedicated to Islamic learning, service, and community.</p>
+                    <div class="hero-actions animate-up delay-3">
+                        <a href="register.html" class="btn btn-primary btn-lg" data-i18n="hero_btn_join">Register as Alumni</a>
+                        <a href="directory.html" class="btn btn-secondary btn-lg" data-i18n="hero_btn_dir">Browse Directory</a>
+                    </div>
+                </div>
+                <div class="hero-visual animate-scale delay-2" style="position:relative; display:flex; justify-content:center;">
+                    <div style="font-size:12rem; filter:drop-shadow(0 20px 40px rgba(184,134,11,0.2));">🕌</div>
+                    <div style="position:absolute; width:100%; height:100%; border:2px solid var(--border-color); border-radius:30% 70% 70% 30% / 30% 30% 70% 70%; animation: morph 15s linear infinite; z-index:-1; opacity:0.3;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section
+        style="padding:5rem 0; background:var(--bg-secondary); border-top:1px solid var(--border-color); border-bottom:1px solid var(--border-color);">
+        <div class="container">
+            <div class="grid-3">
+                <div class="stat-card text-center animate-up">
+                    <div class="stat-number text-primary" id="home-stat-alumni">0</div>
+                    <div class="stat-label" data-i18n="stat_alumni">Registered Alumni</div>
+                </div>
+                <div class="stat-card text-center animate-up delay-1">
+                    <div class="stat-number" style="color:var(--gold);" id="home-stat-events">0</div>
+                    <div class="stat-label" data-i18n="stat_events">Upcoming Events</div>
+                </div>
+                <div class="stat-card text-center animate-up delay-2">
+                    <div class="stat-number text-primary">15+</div>
+                    <div class="stat-label" data-i18n="stat_years">Years of Legacy</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding">
+        <div class="container">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center;">
+                <div class="animate-left">
+                    <div class="hero-tag" style="margin-bottom:1.5rem;" data-i18n="heritage_tag">Our Heritage</div>
+                    <h2 style="font-size:2.5rem; margin-bottom:1.5rem; font-family:var(--font-serif);" data-i18n="heritage_title">A Legacy of
+                        Sacred Knowledge</h2>
+                    <div class="gold-divider"></div>
+                    <p style="color:var(--text-secondary); margin-bottom:1.5rem; line-height:1.9;" data-i18n="heritage_p1">MUHYISSUNNA DARS
+                        UKKUDA has been a beacon of Islamic education for generations. Our graduates carry the torch of
+                        the Sunnah with integrity, wisdom, and dedication.</p>
+                    <p style="color:var(--text-secondary); line-height:1.9;" data-i18n="heritage_p2">This alumni network is a continuation of
+                        the brotherhood and sisterhood forged within our halls — a place to reconnect, inspire, and
+                        serve the Ummah.</p>
+                    <a href="register.html" class="btn btn-primary mt-4" data-i18n="heritage_btn">Join the Network →</a>
+                </div>
+                <div class="animate-up delay-2"
+                    style="background:linear-gradient(135deg,rgba(212,175,55,0.12),rgba(184,134,11,0.06)); height:420px; border-radius:var(--radius-xl); box-shadow:var(--shadow-xl); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1.5rem; border:1px solid var(--border-color); position:relative; overflow:hidden;">
+                    <div class="islamic-pattern" style="opacity:0.06;"></div>
+                    <div style="font-size:5rem; position:relative; z-index:1;">🕌</div>
+                    <div
+                        style="font-family:var(--font-serif); font-size:1.5rem; color:var(--primary); text-align:center; position:relative; z-index:1; padding:0 2rem;">
+                        MUHYISSUNNA DARS UKKUDA</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding" style="background:var(--bg-secondary);">
+        <div class="container">
+            <div class="section-header">
+                <div class="bismillah" style="margin-bottom:1.5rem; font-size:1.1rem;">الحمد لله</div>
+                <h2 data-i18n="features_title">Everything You Need</h2>
+                <p data-i18n="features_sub">A complete platform dedicated to nurturing the bonds of our alumni community.</p>
+            </div>
+            <div class="grid-3">
+                <div class="form-card animate-up" style="padding:2rem;">
+                    <div style="font-size:2.5rem; margin-bottom:1rem;">🌍</div>
+                    <h3 style="margin-bottom:0.75rem; font-family:var(--font-serif);" data-i18n="feat1_title">Global Directory</h3>
+                    <p style="color:var(--text-secondary); font-size:0.95rem;" data-i18n="feat1_desc">Find and connect with alumni around the
+                        world, filtered by graduation year, course, and location.</p>
+                </div>
+                <div class="form-card animate-up delay-1" style="padding:2rem;">
+                    <div style="font-size:2.5rem; margin-bottom:1rem;">📅</div>
+                    <h3 style="margin-bottom:0.75rem; font-family:var(--font-serif);" data-i18n="feat2_title">Events & Programs</h3>
+                    <p style="color:var(--text-secondary); font-size:0.95rem;" data-i18n="feat2_desc">Stay connected through exclusive alumni
+                        events, religious gatherings, and professional meetups.</p>
+                </div>
+                <div class="form-card animate-up delay-2" style="padding:2rem;">
+                    <div style="font-size:2.5rem; margin-bottom:1rem;">🤲</div>
+                    <h3 style="margin-bottom:0.75rem; font-family:var(--font-serif);" data-i18n="feat3_title">Community Service</h3>
+                    <p style="color:var(--text-secondary); font-size:0.95rem;" data-i18n="feat3_desc">Give back to the institution and the
+                        Ummah through scholarship, mentorship, and outreach programs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding">
+        <div class="container text-center">
+            <div class="animate-up" style="max-width:600px; margin:0 auto;">
+                <div class="bismillah" style="margin-bottom:1.5rem;">إِنَّمَا الْمُؤْمِنُونَ إِخْوَةٌ</div>
+                <h2 style="font-size:3rem; margin-bottom:1.5rem; font-family:var(--font-serif);" data-i18n="cta_title">Ready to Reconnect?
+                </h2>
+                <div class="gold-divider" style="max-width:300px; margin:0 auto 2rem;"></div>
+                <p style="color:var(--text-secondary); margin-bottom:2.5rem; font-size:1.1rem;" data-i18n="cta_desc">Registration is quick
+                    and free. Join thousands of alumni already on the platform.</p>
+                <a href="register.html" class="btn btn-primary btn-lg" data-i18n="cta_btn">Get Started</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <a href="index.html" class="nav-logo" style="font-size:1.2rem;">MUHYISSUNNA DARS UKKUDA</a>
+                    <p
+                        style="color:var(--text-muted); margin-top:0.75rem; font-size:0.88rem; max-width:260px; line-height:1.8;" data-i18n="foot_desc">
+                        Preserving knowledge, nurturing graduates, serving the Ummah.</p>
+                    <div class="bismillah" style="font-size:1rem; margin-top:1rem; text-align:left;">جزاكم الله خيرًا
+                    </div>
+                </div>
+                <div>
+                    <h4
+                        style="font-size:0.82rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-muted); margin-bottom:1.25rem;" data-i18n="foot_platform">
+                        Platform</h4>
+                    <a href="directory.html" class="footer-link" data-i18n="nav_directory">Alumni Directory</a>
+                    <a href="events.html" class="footer-link" data-i18n="nav_events">Events</a>
+                    <a href="register.html" class="footer-link" data-i18n="nav_register">Register</a>
+                    <a href="login.html" class="footer-link" data-i18n="nav_login">Login</a>
+                </div>
+                <div>
+                    <h4
+                        style="font-size:0.82rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-muted); margin-bottom:1.25rem;" data-i18n="foot_inst">
+                        Institution</h4>
+                    <a href="#" class="footer-link" data-i18n="foot_about">About Dars</a>
+                    <a href="contact.html" class="footer-link" data-i18n="foot_contact">Contact</a>
+                    <a href="#" class="footer-link" data-i18n="foot_fund">Scholarship Fund</a>
+                </div>
+                <div>
+                    <h4
+                        style="font-size:0.82rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-muted); margin-bottom:1.25rem;" data-i18n="foot_legal">
+                        Legal</h4>
+                    <a href="#" class="footer-link" data-i18n="foot_privacy">Privacy Policy</a>
+                    <a href="#" class="footer-link" data-i18n="foot_terms">Terms of Service</a>
+                </div>
+            </div>
+            <div class="footer-copy">
+                <span>&copy; 2026 MUHYISSUNNA DARS UKKUDA Alumni Network</span>
+                <span>بارك الله فيكم</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
+    <script src="./i18n.js"></script>
+    <script src="./app.js"></script>
+    <script>
+        window.addEventListener('scroll', () => {
+            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
+        });
+
+        function animateValue(id, start, end, duration) {
+            if (start === end) return;
+            const obj = document.getElementById(id);
+            const range = end - start;
+            let current = start;
+            const increment = end > start ? 1 : -1;
+            const stepTime = Math.abs(Math.floor(duration / range));
+            const timer = setInterval(() => {
+                current += increment;
+                obj.innerHTML = current;
+                if (current == end) {
+                    clearInterval(timer);
+                }
+            }, stepTime || 10);
+        }
+
+        function updateHomeStats() {
+            const alumniList = JSON.parse(localStorage.getItem(App.STORAGE_KEYS ? App.STORAGE_KEYS.ALUMNI : 'mdu_alumni_data')) || [];
+            const eventsList = JSON.parse(localStorage.getItem(App.STORAGE_KEYS ? App.STORAGE_KEYS.EVENTS : 'mdu_events')) || [];
+
+            // Add some base numbers for a "live" feel if empty
+            const alumniCount = Math.max(alumniList.length, 1250);
+            const eventsCount = Math.max(eventsList.length, 4);
+
+            animateValue('home-stat-alumni', 0, alumniCount, 1500);
+            animateValue('home-stat-events', 0, eventsCount, 1500);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateHomeStats();
+            window.addEventListener('dbSynced', updateHomeStats);
+        });
+    </script>
+</body>
+
+</html>

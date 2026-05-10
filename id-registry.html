@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ID Registry | MUHYISSUNNA DARS UKKUDA</title>
+    <link rel="stylesheet" href="./main.css?v=1.1">
+    <style>
+        .registry-hero { padding: 100px 0 3rem; background: var(--bg-main); text-align:center; }
+        .id-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:1.5rem; padding-bottom: 5rem;}
+        .id-card-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-top: 4px solid var(--primary);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+        .id-card-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem; margin-bottom: 1rem; }
+        .id-number-badge { background: linear-gradient(135deg,var(--primary),var(--gold)); color: #fff; padding: 0.25rem 0.75rem; border-radius: var(--radius-full); font-weight: 800; font-family: monospace; font-size: 0.9rem; letter-spacing: 0.05em; }
+        .id-name { font-size: 1.15rem; font-weight: 700; color: var(--text-main); }
+        .id-detail-row { display: flex; gap: 0.5rem; margin-bottom: 0.5rem; font-size: 0.88rem; }
+        .id-detail-label { color: var(--text-muted); font-weight: 600; min-width: 80px; }
+        .id-detail-value { color: var(--text-secondary); font-weight: 500;}
+    </style>
+    <link rel="icon" type="image/png" href="./favicon.png">
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">MUHYISSUNNA DARS UKKUDA</a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="directory.html" class="nav-link">Directory</a>
+                <a href="id-registry.html" class="nav-link" style="color:var(--primary);">ID Registry</a>
+                <a href="events.html" class="nav-link">Events</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+                <span data-guest style="display:flex; gap:0.5rem;">
+                    <a href="login.html" class="btn btn-secondary" style="padding:0.55rem 1.2rem;">Login</a>
+                    <a href="register.html" class="btn btn-primary" style="padding:0.55rem 1.2rem;">Register</a>
+                </span>
+                <span data-auth style="display:none; gap:0.5rem; align-items:center;">
+                    <a href="dashboard.html" class="btn btn-secondary" style="padding:0.55rem 1.2rem;">Dashboard</a>
+                    <a href="admin.html" data-role="admin" class="btn btn-secondary" style="padding:0.55rem 1.2rem; display:none;">Admin</a>
+                    <button id="logout-btn" class="btn btn-primary" style="padding:0.55rem 1.2rem;">Logout</button>
+                </span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="registry-hero">
+        <div class="container">
+            <div class="bismillah" style="margin-bottom:.75rem;">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</div>
+            <h1 style="font-family:var(--font-serif); font-size:2.5rem; margin-bottom:0.5rem;">Official ID Registry</h1>
+            <p style="color:var(--text-secondary);">Public verification database for registered alumni members.</p>
+        </div>
+    </div>
+
+    <section style="background:var(--bg-secondary); min-height: 50vh;">
+        <div class="container" style="padding-top: 2rem;">
+            <div style="margin-bottom: 2rem;">
+                <input type="search" id="registry-search" class="form-input" placeholder="🔍 Search by Name or ID Number..." style="max-width: 400px; padding: 0.8rem 1rem;">
+            </div>
+
+            <div class="id-grid" id="registry-grid">
+                <p style="color:var(--text-muted);">Loading registry data...</p>
+            </div>
+        </div>
+    </section>
+
+        <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
+    <script src="./app.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        function renderRegistry() {
+            const searchTerm = document.getElementById('registry-search').value.toLowerCase();
+            // Fetch all approved alumni
+            const alumniList = App.getAlumni(); 
+            const grid = document.getElementById('registry-grid');
+            grid.innerHTML = '';
+
+            // Filter based on search
+            const filtered = alumniList.filter(a => 
+                (a.name && a.name.toLowerCase().includes(searchTerm)) || 
+                (a.memberId && a.memberId.toLowerCase().includes(searchTerm))
+            );
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '<p style="color:var(--text-muted);">No matching IDs found.</p>';
+                return;
+            }
+
+            filtered.forEach(a => {
+                const workplace = a.company || a.institute || a.teachInst || 'Not Specified';
+                const occupation = a.job || a.course || a.subject || App.statusLabel(a.status) || 'Not Specified';
+                const memId = a.memberId || 'Pending ID';
+
+                const card = document.createElement('div');
+                card.className = 'id-card-item';
+                card.innerHTML = `
+                    <div class="id-card-header">
+                        <div class="id-name">${a.name}</div>
+                        <div class="id-number-badge">${memId}</div>
+                    </div>
+                    <div class="id-detail-row"><div class="id-detail-label">Phone:</div><div class="id-detail-value">${a.phone || '—'}</div></div>
+                    <div class="id-detail-row"><div class="id-detail-label">Batch:</div><div class="id-detail-value">${a.batch || '—'}</div></div>
+                    <div class="id-detail-row"><div class="id-detail-label">Role:</div><div class="id-detail-value">${occupation}</div></div>
+                    <div class="id-detail-row"><div class="id-detail-label">Location:</div><div class="id-detail-value">${workplace}</div></div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        document.getElementById('registry-search').addEventListener('input', renderRegistry);
+        renderRegistry();
+        window.addEventListener('dbSynced', renderRegistry);
+    });
+    </script>
+</body>
+</html>

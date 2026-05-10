@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alumni Directory | MUHYISSUNNA DARS UKKUDA</title>
+    <meta name="description" content="Search and discover alumni of MUHYISSUNNA DARS UKKUDA.">
+    <link rel="stylesheet" href="./main.css">
+    <style>
+        .dir-hero { padding: 120px 0 3rem; background: var(--bg-main); text-align:center; }
+        .dir-hero h1 { font-family:var(--font-serif); font-size:clamp(2rem,4vw,3rem); margin-bottom:.75rem; }
+        .dir-hero p { color:var(--text-secondary); max-width:520px; margin:0 auto; }
+
+        /* Filter bar */
+        .filter-bar { background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-xl); padding:1.25rem 1.5rem; margin-bottom:2rem; display:flex; gap:1rem; flex-wrap:wrap; align-items:center; box-shadow:var(--shadow-sm); }
+        .filter-bar input, .filter-bar select { flex:1; min-width:160px; padding:.65rem 1rem; border:1.5px solid var(--border-color); border-radius:var(--radius-md); background:var(--bg-main); color:var(--text-main); font-family:inherit; font-size:.88rem; transition:var(--transition-fast); }
+        .filter-bar input:focus, .filter-bar select:focus { outline:none; border-color:var(--primary); box-shadow:0 0 0 3px rgba(212,175,55,.15); }
+
+        /* Cards */
+        .alumni-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(270px,1fr)); gap:1.5rem; }
+        .al-card { background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-xl); overflow:hidden; transition:var(--transition-bounce); }
+        .al-card:hover { transform:translateY(-8px) scale(1.01); box-shadow:var(--shadow-xl); border-color:rgba(212,175,55,.4); }
+        .al-card-head { padding:1.75rem 1.5rem 1rem; display:flex; gap:1rem; align-items:center; border-bottom:1px solid var(--border-color); }
+        .al-card-avatar { flex-shrink:0; }
+        .al-card-body { padding:1.25rem 1.5rem; }
+        .al-name { font-weight:700; font-size:1rem; margin-bottom:.2rem; }
+        .al-dars { font-size:.8rem; color:var(--text-muted); margin-bottom:.5rem; }
+        .al-meta-row { display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.75rem; }
+        .al-tag { display:inline-flex; align-items:center; gap:.3rem; padding:.2rem .65rem; background:rgba(212,175,55,.09); color:var(--primary); border:1px solid rgba(212,175,55,.25); border-radius:var(--radius-full); font-size:.72rem; font-weight:600; }
+
+        .empty-dir { text-align:center; padding:5rem 2rem; color:var(--text-muted); }
+        .empty-dir .icon { font-size:3.5rem; margin-bottom:1rem; }
+        .count-label { color:var(--text-muted); font-size:.85rem; margin-bottom:1rem; }
+    </style>
+    <link rel="icon" type="image/png" href="./favicon.png">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">MUHYISSUNNA DARS UKKUDA</a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link" data-i18n="nav_home">Home</a>
+                <a href="directory.html" class="nav-link" style="color:var(--primary);font-weight:bold;" data-i18n="nav_directory">Directory</a>
+                <a href="events.html" class="nav-link" data-i18n="nav_events">Events</a>
+                <a href="contact.html" class="nav-link" data-i18n="nav_contact">Contact</a>
+                <span data-guest style="display:flex; gap:0.5rem;">
+                    <a href="login.html" class="btn btn-secondary" style="padding:0.55rem 1.2rem;" data-i18n="nav_login">Login</a>
+                    <a href="register.html" class="btn btn-primary" style="padding:0.55rem 1.2rem;" data-i18n="nav_register">Register</a>
+                </span>
+                <span data-auth style="display:none; gap:0.5rem; align-items:center;">
+                    <a href="admin.html" data-role="admin" class="btn btn-secondary" style="padding:0.55rem 1.2rem; display:none;">Admin</a>
+                    <button id="logout-btn" class="btn btn-primary" style="padding:0.55rem 1.2rem;">Logout</button>
+                </span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dir-hero">
+        <div class="container">
+            <div class="bismillah" style="margin-bottom:.75rem;">الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ</div>
+            <h1>Alumni <span style="background:linear-gradient(135deg,var(--primary),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Directory</span></h1>
+            <p>Browse and connect with graduates of MUHYISSUNNA DARS UKKUDA from all batches.</p>
+            <div class="gold-divider" style="max-width:200px;margin:1.5rem auto 0;"></div>
+        </div>
+    </div>
+
+    <section style="background:var(--bg-secondary);padding:3rem 0 5rem;">
+        <div class="container">
+            <div class="filter-bar">
+                <input type="search" id="dir-search" placeholder="🔍  Search by name, address, qualification…" style="flex:2;min-width:220px;">
+                <select id="dir-batch">
+                    <option value="">All Batches</option>
+                    <option>Batch 1</option><option>Batch 2</option><option>Batch 3</option>
+                    <option>Batch 4</option><option>Batch 5</option><option>Batch 6</option>
+                    <option>Batch 7</option><option>Batch 8</option><option>Batch 9</option>
+                    <option>Batch 10</option><option>Other</option>
+                </select>
+                <select id="dir-status">
+                    <option value="">All Statuses</option>
+                    <option value="employed">💼 Employed</option>
+                    <option value="studying">📖 Studying</option>
+                    <option value="teaching">🏫 Teaching</option>
+                    <option value="other">🔍 Other</option>
+                </select>
+            </div>
+
+            <div class="count-label" id="dir-count">Loading alumni…</div>
+            <div class="alumni-grid" id="alumni-grid"></div>
+            <div class="empty-dir" id="dir-empty" style="display:none;">
+                <div class="icon">🔎</div>
+                <p>No alumni found matching your filters.</p>
+            </div>
+        </div>
+    </section>
+
+        <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
+    <script src="./i18n.js"></script>
+    <script src="./app.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        function render() {
+            const search = document.getElementById('dir-search').value.trim();
+            const batch  = document.getElementById('dir-batch').value;
+            const status = document.getElementById('dir-status').value;
+
+            let list = App.getAlumni(search ? { search } : {});
+            if (batch)  list = list.filter(a => a.batch  === batch);
+            if (status) list = list.filter(a => a.status === status);
+
+            const grid  = document.getElementById('alumni-grid');
+            const empty = document.getElementById('dir-empty');
+            const count = document.getElementById('dir-count');
+
+            grid.innerHTML = '';
+            count.textContent = list.length
+                ? `Showing ${list.length} alumni`
+                : '';
+
+            if (!list.length) { empty.style.display='block'; return; }
+            empty.style.display = 'none';
+
+            list.forEach(a => {
+                const card = document.createElement('div');
+                card.className = 'al-card fade-up';
+
+                const detail = a.status === 'employed' ? (a.job||'') + (a.company ? ` · ${a.company}` : '')
+                             : a.status === 'studying' ? (a.course||'') + (a.institute ? ` · ${a.institute}` : '')
+                             : a.status === 'teaching' ? (a.subject||'') + (a.teachInst ? ` · ${a.teachInst}` : '')
+                             : '';
+
+                card.innerHTML = `
+                    <div class="al-card-head">
+                        <div class="al-card-avatar">${App.avatarHTML(a,52)}</div>
+                        <div>
+                            <div class="al-name">${a.name}</div>
+                            <div class="al-dars">${a.darsQual||'Dars Graduate'}</div>
+                            <div style="display:flex; gap:0.4rem; align-items:center;">
+                                <span class="al-tag">${a.batch||'Alumni'}</span>
+                                <span class="al-tag" style="background:var(--bg-main); border-color:var(--border-color); color:var(--text-main); font-family:monospace;">${a.memberId||'Pending ID'}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="al-card-body">
+                        <div style="font-size:.83rem;color:var(--text-secondary);margin-bottom:.5rem;">📍 ${a.address||'—'}</div>
+                        ${detail ? `<div style="font-size:.82rem;color:var(--text-muted);margin-bottom:.5rem;">${App.statusLabel(a.status)} · ${detail}</div>` : ''}
+                        <div class="al-meta-row">
+                            ${a.passedYear ? `<span class="al-tag">🎓 ${a.passedYear}</span>` : ''}
+                            ${a.joinedYear ? `<span class="al-tag">📅 Joined ${a.joinedYear}</span>` : ''}
+                        </div>
+                    </div>`;
+                grid.appendChild(card);
+            });
+
+            // Trigger fade-up
+            setTimeout(() => document.querySelectorAll('.al-card.fade-up').forEach(el => el.classList.add('visible')), 60);
+        }
+
+        document.getElementById('dir-search').addEventListener('input',  render);
+        document.getElementById('dir-batch').addEventListener('change',   render);
+        document.getElementById('dir-status').addEventListener('change',  render);
+        render();
+        window.addEventListener('dbSynced', render);
+    });
+    </script>
+</body>
+</html>

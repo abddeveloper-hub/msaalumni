@@ -1,0 +1,41 @@
+{
+  "name": "MUHYISSUNNA DARS UKKUDA Alumni Network",
+  "short_name": "MDU Alumni",
+  "description": "Official Alumni Network for MUHYISSUNNA DARS UKKUDA. Stay connected, grow, and give back.",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#fdfaf4",
+  "theme_color": "#b8860b",
+  "categories": ["education", "business"],
+  "screenshots": [
+    {
+      "src": "favicon.png",
+      "sizes": "540x720",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ],
+  "icons": [
+    {
+      "src": "favicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "favicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "prefer_related_applications": false
+}

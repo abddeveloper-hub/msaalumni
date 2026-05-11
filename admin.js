@@ -64,6 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td>
                     <div style="display:flex;gap:.35rem;flex-wrap:wrap">
                         <button class="ta ta-v" data-action="view-p" data-id="${a.fbId}">👁 View</button>
+                        <button class="ta ta-e" data-action="edit-p" data-id="${a.fbId}">✏️ Edit</button>
                         <button class="ta ta-a" data-action="approve" data-id="${a.fbId}">✓ Approve</button>
                         <button class="ta ta-r" data-action="reject"  data-id="${a.fbId}">✕ Reject</button>
                     </div>
@@ -138,8 +139,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 ['Submitted',      App.formatDate(a.registeredAt)]
             ])}
             <div style="display:flex;gap:.75rem;margin-top:1.5rem;flex-wrap:wrap">
-                <button class="btn btn-success ta-a" style="flex:1;min-width:120px" data-action="approve" data-id="${a.id}">✓ Approve</button>
-                <button class="btn btn-danger  ta-r" style="flex:1;min-width:120px" data-action="reject"  data-id="${a.id}">✕ Reject</button>
+                <button class="btn btn-success ta-a" style="flex:1;min-width:120px" data-action="approve" data-id="${a.fbId}">✓ Approve</button>
+                <button class="btn btn-danger  ta-r" style="flex:1;min-width:120px" data-action="reject"  data-id="${a.fbId}">✕ Reject</button>
             </div>`;
         openModal('modal-view-p');
     }
@@ -263,9 +264,31 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('ef-status').value  = a.status       || 'other';
         document.getElementById('ef-job').value     = a.job || a.course || a.subject || '';
         document.getElementById('ef-company').value = a.company || a.institute || a.teachInst || '';
+        
+        const preview = document.getElementById('ef-photo-preview');
+        if (a.photo) {
+            preview.src = a.photo;
+        } else {
+            preview.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>';
+        }
+
         document.getElementById('edit-err').style.display = 'none';
         closeModal('modal-view-a');
         openModal('modal-edit');
+    }
+
+    /* PHOTO PREVIEW IN EDIT */
+    const efPhotoInput = document.getElementById('ef-photo-input');
+    if (efPhotoInput) {
+        efPhotoInput.addEventListener('change', e => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = ev => {
+                document.getElementById('ef-photo-preview').src = ev.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
     }
 
     /* SWITCH from detail view to edit */
@@ -308,9 +331,15 @@ document.addEventListener('DOMContentLoaded', () => {
             course:      status === 'studying' ? jobVal : '',
             institute:   status === 'studying' ? coVal  : '',
             subject:     status === 'teaching' ? jobVal : '',
-            teachInst:   status === 'teaching' ? coVal  : ''
+            teachInst:   status === 'teaching' ? coVal  : '',
+            photo:       document.getElementById('ef-photo-preview').src
         };
-        await App.updateAlumni(activeAlumni.fbId, data);
+
+        if (activeAlumni.approvalStatus === 'pending') {
+            if (db) await db.collection('pending').doc(activeAlumni.fbId).update(data);
+        } else {
+            await App.updateAlumni(activeAlumni.fbId, data);
+        }
         closeModal('modal-edit');
         renderStats();
         renderApproved(document.getElementById('srch-a').value);
@@ -334,6 +363,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (btn.dataset.action === 'view-p') {
             const r = App.getPendingRegistrations().find(a => a.fbId === id);
             if (r) showPendingDetail(r);
+        } else if (btn.dataset.action === 'edit-p') {
+            const r = App.getPendingRegistrations().find(a => a.fbId === id);
+            if (r) openEditModal(r);
         } else if (btn.dataset.action === 'approve') {
             if (confirm('Approve this registration?')) {
                 disableBtn();

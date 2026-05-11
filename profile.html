@@ -249,7 +249,7 @@
 
                 <form id="profile-form" novalidate style="display:none;">
 
-                    <div class="f-section">Profile Photo</div>
+                    <div class="f-section">Profile Photo *</div>
                     <div class="photo-zone" id="photo-zone">
                         <input type="file" id="photo-input" accept="image/*">
                         <img id="photo-preview" class="photo-preview" alt="Preview">
@@ -308,16 +308,10 @@
                             <label class="form-label">Batch *</label>
                             <select id="p-batch" class="form-input" required>
                                 <option value="" disabled selected>Select batch</option>
-                                <option>Batch 1</option>
-                                <option>Batch 2</option>
-                                <option>Batch 3</option>
-                                <option>Batch 4</option>
-                                <option>Batch 5</option>
-                                <option>Batch 6</option>
-                                <option>Batch 7</option>
-                                <option>Batch 8</option>
-                                <option>Batch 9</option>
-                                <option>Batch 10</option>
+                                <option>Old Students</option>
+                                <option>Madaneeyam</option>
+                                <option>Mubbashara</option>
+                                <option>Musharrafa</option>
                                 <option>Other</option>
                             </select>
                             <span class="form-error">Please select a batch.</span>
@@ -509,6 +503,15 @@
 
             // Build alumni record
             const photoSrc = photoPreview.src && photoPreview.style.display !== 'none' ? photoPreview.src : '';
+            if (!photoSrc) {
+                banner.textContent = 'Profile photo is compulsory. Please upload your photo.';
+                banner.style.display = 'block';
+                banner.scrollIntoView({ behavior:'smooth', block:'center' });
+                btn.textContent = oldText;
+                btn.disabled = false;
+                return;
+            }
+
             const statusVal = statusSelected.value;
 
             const record = {
